@@ -11,12 +11,26 @@ class UserController {
         });
       }
 
+      if (!phone_number) {
+        return res.status(400).json({
+          message: "Phone number is missing",
+        });
+      }
+
+      const stripe = require("stripe")("sk_test_4eC39HqLyjWDarjtT1zdp7dc");
+
+      const customer = await stripe.customers.create({
+        email: email,
+        phone: phone_number,
+      });
+
       const user = new User({
         name,
         email,
         password,
         address,
         phone_number,
+        customerId: customer.id
       });
 
       const result = await User.register(user);
@@ -28,6 +42,8 @@ class UserController {
           message: result.error,
         });
       }
+
+      
 
       return res.status(201).json({
         message: "Successfully created user",
@@ -51,7 +67,7 @@ class UserController {
         });
       }
 
-      const result = await User.login({email, password});
+      const result = await User.login({ email, password });
 
       console.log(result, "56");
 
@@ -60,7 +76,7 @@ class UserController {
           message: result.error,
         });
       }
-      
+
       if (result.message === "Invalid") {
         return res.status(400).json({
           message: "Wrong email or password",
@@ -69,7 +85,7 @@ class UserController {
 
       return res.status(200).json({
         message: "Login Succeed",
-        token: result.token
+        token: result.token,
       });
     } catch (error) {
       console.log(error, "68");

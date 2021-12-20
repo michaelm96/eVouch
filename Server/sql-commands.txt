@@ -8,6 +8,31 @@ CREATE TABLE `voucher`.`user` (
   `address` VARCHAR(45) NULL,
   `phone_number` VARCHAR(45) NULL,
   `limit` INT NULL,
+  `customerId` VARCHAR(45) 
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
   UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE);
+
+CREATE TABLE `voucher`.`vouch` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `title` VARCHAR(45) NULL,
+  `desc` VARCHAR(250) NULL,
+  `expiry_date` DATETIME NULL,
+  `image` VARCHAR(90) NULL,
+  `amount` INT NULL,
+  `payment_method` VARCHAR(45) NULL,
+  `discount` INT NULL,
+  `quantity` INT NULL,
+  `buy_type` VARCHAR(45) NULL,
+  `limit` INT NULL,
+  `status` VARCHAR(45) NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE);
+
+CREATE TABLE `voucher`.`new_table` (
+  `id` INT NOT NULL,
+  `userId` INT NULL,
+  `voucherId` INT NULL,
+  `used` VARCHAR(45) NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE);

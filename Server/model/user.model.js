@@ -9,6 +9,7 @@ const User = function (user) {
   this.address = user.address;
   this.phone_number = user.phone_number;
   this.limit = user.limit;
+  this.customerId = user.customerId
 };
 
 User.register = async (userData) => {
@@ -19,7 +20,8 @@ User.register = async (userData) => {
       email: userData.email,
       password: hash,
       address: !userData.address ? "" : userData.address,
-      phone_number: !userData.phone ? "" : userData.phone,
+      phone_number: userData.phone_number,
+      customerId: userData.customerId,
       limit: 50,
     });
     // await sql.end();
@@ -43,7 +45,8 @@ User.login = async (userData) => {
     if (!valid) {
       return { message: "Invalid" };
     }
-    const token = jwt.sign({ email: userData.email }, process.env.SECRET_KEY, {
+    let payload = { id: res[0][0].id, email: res[0][0].email, phone_number: res[0][0].phone_number, customerId: res[0][0].customerId }
+    const token = jwt.sign(payload, process.env.SECRET_KEY, {
       expiresIn: "24h",
     });
 

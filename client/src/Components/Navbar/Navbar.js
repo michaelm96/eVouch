@@ -16,7 +16,7 @@ function Navbar() {
           </h4>
         ) : (
           <h4>
-            <Link to={"/login"}>Logout</Link>
+            <Link onClick={() => sessionStorage.removeItem("token")} to={"/login"}>Logout</Link>
           </h4>
         )}
       </div>
