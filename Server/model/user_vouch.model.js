@@ -42,10 +42,13 @@ User_Vouch.useVoucher = async (voucherId, userId, amount) => {
 User_Vouch.getUserVoucher = async (userId) => {
   try {
     let res = await sql.query(
-      `SELECT * FROM user_vouch WHERE userId = "${userId}",`
+      `SELECT * FROM user_vouch WHERE userId = "${userId}"`
     );
 
-    return { message: "Success", result: res };
+    if(!res[0].length){
+      return { message: "Empty", result: [] };
+    }
+    return { message: "Success", result: res[0] };
   } catch (error) {
     console.log("error: ", error);
     return { message: "Error", error: error };

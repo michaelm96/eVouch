@@ -30,7 +30,7 @@ class UserController {
         password,
         address,
         phone_number,
-        customerId: customer.id
+        customerId: customer.id,
       });
 
       const result = await User.register(user);
@@ -42,8 +42,6 @@ class UserController {
           message: result.error,
         });
       }
-
-      
 
       return res.status(201).json({
         message: "Successfully created user",

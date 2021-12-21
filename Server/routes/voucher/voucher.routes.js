@@ -4,7 +4,7 @@ const authentication = require('../../helper/authentication')
 
 router.use(authentication)
 router.get('/', voucherController.getAll)
-router.get('/userVoucher', voucherController.getUserVoucher)
+router.get('/userVoucher/:id', voucherController.getUserVoucher)
 router.get('/verify', voucherController.verifyByTitle)
 router.get('/payMethodList', voucherController.paymentMethodList)
 router.get('/:id', voucherController.getById)

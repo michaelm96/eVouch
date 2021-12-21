@@ -13,6 +13,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(routes);
 
+// To inactivate a voucher when it meeets expiry date
 cron.schedule(
   "0 0 * * *",
   async () => {

@@ -268,7 +268,7 @@ class VoucherController {
           }
         }
 
-        return res.status(201).json({
+        return res.status(200).json({
           message: "Successfully make a payment",
         });
       }
@@ -305,19 +305,26 @@ class VoucherController {
 
   static async getUserVoucher(req, res, next) {
     try {
-      const { userId } = req.body;
+      const { id } = req.params;
 
-      const data = await User_Vouch.getUserVoucher(userId);
+      const data = await User_Vouch.getUserVoucher(id);
 
-      if (result.message === "Error") {
+      if (data.message === "Error") {
         return res.status(500).json({
-          message: result.error,
+          message: data.error,
+        });
+      }
+
+      if (data.message === "Empty") {
+        return res.status(404).json({
+          message: "No data found",
+          result: []
         });
       }
 
       return res.status(200).json({
         message: `user voucher retrieved`,
-        data: data.result,
+        result: data.result,
       });
     } catch (error) {
       console.log(error, "298");
@@ -338,7 +345,7 @@ class VoucherController {
 
       console.log(paymentMethods);
 
-      return res.status(201).json({
+      return res.status(200).json({
         message: "User's payment list method successfully retrieved",
         result: paymentMethods.data,
       });
